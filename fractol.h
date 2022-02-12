@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-# define SIZEX 600
-# define SIZEY 600
+# define WIDTH 800
+# define HEIGHT 800
 # define ITERATION	120
 #include <stdio.h> 
 
@@ -25,7 +25,7 @@ typedef struct s_data
 	double	juliax;
 }	t_data;
 
-void	start_mandelbrot(t_data *mlx);
-void	start_julia(t_data *mlx);
-
+int	mandelbrot(t_data *mlx);
+int	julia(t_data *mlx);
+int	close_esc(void);
 #endif

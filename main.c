@@ -1,6 +1,5 @@
 #include "fractol.h"
 
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	unsigned int	i;
@@ -11,21 +10,31 @@ int	ft_strcmp(char *s1, char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
+void	initialize(t_data *data)
+{
+	data->mlx = mlx_init();
+	data->mlx_win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fract'ol");
+	data->xmin = -2;
+	data->xmax = 2;
+	data->ymin = -2;
+	data->ymax = 2;
+	data->color = 0;
+}
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	
 	if (argc >= 2)
 	{
+		initialize(&data);
 		if (!ft_strcmp(argv[1], "Mandelbrot") )
-			start_mandelbrot(&data);
+			mandelbrot(&data);
 		else if (!ft_strcmp(argv[1], "Julia"))
-			start_julia(&data);
+			julia(&data);
 		else
-		{
-			printf(".::: The parameters is invalid! :::.\n");
-		}
-	}	
+			printf("Wrong name of fractal\n");
+	}
+	else
+		printf("Wrong count of argumens\n");
 }

@@ -1,57 +1,36 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   additional_funcs.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ahjadani <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/27 16:01:14 by ahjadani          #+#    #+#             */
-/*   Updated: 2022/01/03 14:53:39 by ahjadani         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "fractol.h"
 
-int	ft_exit(void)
+int	close_esc(void)
 {
-	exit(1);
+	exit(0);
 	return (0);
 }
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	unsigned int	i;
 
-	i = 0;
-	while (s2[i] && s1[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
+// void	move(int keycode, t_data *mlx)
+// {
+// 	float	dx;
+// 	float	dy;
 
-void	move(int keycode, t_data *mlx)
-{
-	float	dx;
-	float	dy;
-
-	dx = (mlx->xmax - mlx->xmin);
-	dy = (mlx->ymax - mlx->ymin);
-	if (keycode == 53 || keycode == 65307) 
-		exit(0);
-	if (keycode == 123 || keycode == 124 || keycode == 65363 || keycode == 65361)
-	{
-		if (keycode == 123 || keycode == 65361)
-			dx *= -1;
-		mlx->xmin += dx / 7.5;
-		mlx->xmax += dx / 7.5;
-	}
-	if (keycode == 126 || keycode == 125 || keycode == 65364 || keycode == 65362)
-	{
-		if (keycode == 125 || keycode == 65364)
-			dy *= -1;
-		mlx->ymin += dy / 7.5;
-		mlx->ymax += dy / 7.5;
-	}
-}
+// 	dx = (mlx->xmax - mlx->xmin);
+// 	dy = (mlx->ymax - mlx->ymin);
+// 	if (keycode == 53 || keycode == 65307) 
+// 		exit(0);
+// 	if (keycode == 123 || keycode == 124 || keycode == 65363 || keycode == 65361)
+// 	{
+// 		if (keycode == 123 || keycode == 65361)
+// 			dx *= -1;
+// 		mlx->xmin += dx / 7.5;
+// 		mlx->xmax += dx / 7.5;
+// 	}
+// 	if (keycode == 126 || keycode == 125 || keycode == 65364 || keycode == 65362)
+// 	{
+// 		if (keycode == 125 || keycode == 65364)
+// 			dy *= -1;
+// 		mlx->ymin += dy / 7.5;
+// 		mlx->ymax += dy / 7.5;
+// 	}
+// }
 
 // int	keys(int keycode, t_data *mlx)
 // { 

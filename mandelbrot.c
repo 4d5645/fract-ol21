@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-int	mandelbrot_set(double x, double y, t_data *mlx)
+int	mandelbrot_set(double x, double y, t_data *data)
 {
 	int		i;
 	double	xx;
@@ -17,49 +17,37 @@ int	mandelbrot_set(double x, double y, t_data *mlx)
 		yy = (2 * temp * yy) + y;
 		if (xx * xx + yy * yy > 4)
 		{
-			mlx_pixel_put(mlx->mlx, mlx->mlx_win, mlx->loopx, mlx->loopy,
-				(mlx->color) + 0x00FFC0CB * i);
+			mlx_pixel_put(data->mlx, data->mlx_win, data->loopx, data->loopy,
+				(data->color) + 0x00FFC0CB * i);
 			return (0);
 		}
 		i++;
 	}
-	mlx_pixel_put(mlx->mlx, mlx->mlx_win, mlx->loopx, mlx->loopy, 0x000E0E0E);
+	mlx_pixel_put(data->mlx, data->mlx_win, data->loopx, data->loopy, 0x000E0E0E);
 	return (0);
 }
 
-int	mandelbrot(t_data *mlx)
+int	mandelbrot(t_data *data)
 {
 	double	x;
 	double	y;
 
-	mlx->loopx = 0;
-	mlx->loopy = 0;
-	mlx_clear_window(mlx->mlx, mlx->mlx_win);
-	while (mlx->loopy < SIZEY)
+	data->loopx = 0;
+	data->loopy = 0;
+	mlx_clear_window(data->mlx, data->mlx_win);
+	while (data->loopy < HEIGHT)
 	{
-		while (mlx->loopx < SIZEX)
+		while (data->loopx < WIDTH)
 		{
-			x = mlx->xmin + (mlx->loopx * ((mlx->xmax - mlx->xmin) / SIZEX));
-			y = mlx->ymin + (mlx->loopy * ((mlx->ymax - mlx->ymin) / SIZEY));
-			mandelbrot_set(x, y, mlx);
-			mlx->loopx++;
+			x = data->xmin + (data->loopx * ((data->xmax - data->xmin) / WIDTH));
+			y = data->ymin + (data->loopy * ((data->ymax - data->ymin) / HEIGHT));
+			mandelbrot_set(x, y, data);
+			data->loopx++;
 		}
-		mlx->loopy++;
-		mlx->loopx = 0;
+		data->loopy++;
+		data->loopx = 0;
 	}
+	mlx_hook(data->mlx_win, 17, 2, close_esc, (void *)0);
+	mlx_loop(data->mlx);
 	return (1);
-}
-
-
-void	start_mandelbrot(t_data *mlx)
-{
-	mlx->mlx = mlx_init();
-	mlx->mlx_win = mlx_new_window(mlx->mlx, 600, 600, "Fract'ol - Mandelbrot");
-	mlx->xmin = -2;
-	mlx->xmax = 2;
-	mlx->ymin = -2;
-	mlx->ymax = 2;
-	mlx->color = 0;
-	mandelbrot(mlx);
-	mlx_loop(mlx->mlx);
 }

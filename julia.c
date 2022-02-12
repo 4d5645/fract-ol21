@@ -27,38 +27,25 @@ int	julia_set(double x, double y, t_data *mlx)
 	return (0);
 }
 
-int	julia(t_data *mlx)
+int	julia(t_data *data)
 {
 	double	x;
 	double	y;
 
-	mlx->loopx = 0;
-	mlx->loopy = 0;
-	mlx_clear_window(mlx->mlx, mlx->mlx_win);
-	while (mlx->loopy < SIZEY)
+	data->loopx = 0;
+	data->loopy = 0;
+	mlx_clear_window(data->mlx, data->mlx_win);
+	while (data->loopy < HEIGHT)
 	{
-		while (mlx->loopx < SIZEX)
+		while (data->loopx < WIDTH)
 		{
-			x = mlx->xmin + (mlx->loopx * ((mlx->xmax - mlx->xmin) / SIZEX));
-			y = mlx->ymax - (mlx->loopy * ((mlx->ymax - mlx->ymin) / SIZEY));
-			julia_set(x, y, mlx);
-			mlx->loopx++;
+			x = data->xmin + (data->loopx * ((data->xmax - data->xmin) / WIDTH));
+			y = data->ymax - (data->loopy * ((data->ymax - data->ymin) / HEIGHT));
+			julia_set(x, y, data);
+			data->loopx++;
 		}
-		mlx->loopy++;
-		mlx->loopx = 0;
+		data->loopy++;
+		data->loopx = 0;
 	}
 	return (0);
-}
-
-void	start_julia(t_data *mlx)
-{
-	mlx->mlx = mlx_init();
-	mlx->mlx_win = mlx_new_window(mlx->mlx, 600, 600, "Fract'ol - Julia");
-	mlx->xmin = -2;
-	mlx->xmax = 2;
-	mlx->ymin = -2;
-	mlx->ymax = 2;
-	mlx->color = 0;
-	julia(mlx);
-	mlx_loop(mlx->mlx);
 }
