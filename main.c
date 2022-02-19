@@ -26,6 +26,7 @@ void	initialize(t_data *data)
 {
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fract'ol");
+	data->img = mlx_new_image(data, WIDTH, HEIGHT);
 	data->xmin = -2;
 	data->xmax = 2;
 	data->ymin = -2;
@@ -39,9 +40,12 @@ void	start_fractal(t_data *data, char flag)
 		mandelbrot(data);
 	if (flag == 'j')
 		julia(data);
-	else
-		printf("Smth wrong\n");
 }
+
+/*
+** Initialize the structure and determine which fractal is given as an argument.
+** Draw fractal and read events.
+*/
 
 int	main(int argc, char **argv)
 {
@@ -55,16 +59,17 @@ int	main(int argc, char **argv)
 			start_fractal(&data, 'm');
 			mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
 			mlx_key_hook(data.mlx_win, keys, &data);
-			//mlx_mouse_hook(mlx.win, zoom, (void *)&mlx);
+			mlx_mouse_hook(data.mlx_win, zoom, (void *)&data);
+			mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);
 			mlx_loop(data.mlx);
 		}
 		else if (!ft_strcmp(argv[1], "Julia"))
 		{
 			start_fractal(&data, 'j');
-			mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
-			mlx_key_hook(data.mlx_win, keys, &data);
-			//mlx_mouse_hook(mlx.win, zoom, (void *)&mlx);
-			mlx_loop(data.mlx);
+			// mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
+			// mlx_key_hook(data.mlx_win, keys, &data);
+			// mlx_mouse_hook(mlx.win, zoom, (void *)&mlx);
+			// mlx_loop(data.mlx);
 		}
 		else
 			printf("Wrong name of fractal\n");

@@ -11,6 +11,14 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
+void	img_pix_put(t_data *img, int x, int y, int color)
+{
+	char    *pixel;
+
+    pixel = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(int *)pixel = color;
+}
+
 int	mandelbrot_set(double x, double y, t_data *data)
 {
 	int		i;
@@ -28,38 +36,42 @@ int	mandelbrot_set(double x, double y, t_data *data)
 		yy = (2 * temp * yy) + y;
 		if (xx * xx + yy * yy > 4)
 		{
-			mlx_pixel_put(data->mlx, data->mlx_win, data->loopx, data->loopy,
-				(data->color) + 0x00FFC0CB * i);
+			img_pix_put(data, data->iter_x, data->iter_y, (data->color) + 0x00FFC0CB * i);
 			return (0);
 		}
 		i++;
 	}
-	mlx_pixel_put(data->mlx, data->mlx_win,
-		data->loopx, data->loopy, 0x000E0E0E);
+	img_pix_put(data, data->iter_x, data->iter_y, 0x000E0E0E);
 	return (0);
 }
+
+/*
+** Use nested loop
+*/
 
 int	mandelbrot(t_data *data)
 {
 	double	x;
 	double	y;
 
-	data->loopx = 0;
-	data->loopy = 0;
+	data->iter_x = 0;
+	data->iter_y = 0;
 	mlx_clear_window(data->mlx, data->mlx_win);
-	while (data->loopy < HEIGHT)
+	while (data->iter_y < HEIGHT)
 	{
-		while (data->loopx < WIDTH)
+		while (data->iter_x < WIDTH)
 		{
-			x = data->xmin + (data->loopx
+			x = data->xmin + (data->iter_x
 					* ((data->xmax - data->xmin) / WIDTH));
-			y = data->ymin + (data->loopy
+			y = data->ymin + (data->iter_y
 					*((data->ymax - data->ymin) / HEIGHT));
+			data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length,
+								&data->endian);
 			mandelbrot_set(x, y, data);
-			data->loopx++;
+			data->iter_x++;
 		}
-		data->loopy++;
-		data->loopx = 0;
+		data->iter_y++;
+		data->iter_x = 0;
 	}
 	return (1);
 }

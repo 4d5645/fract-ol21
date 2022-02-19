@@ -26,12 +26,17 @@ typedef struct s_data
 {
 	void	*mlx_win;
 	void	*mlx;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 	double	ymin;
 	double	xmax;
 	double	ymax;
 	double	xmin;
-	int		loopx;
-	int		loopy;
+	int		iter_x;
+	int		iter_y;
 	int		color;
 	double	juliay;
 	double	juliax;
@@ -43,5 +48,6 @@ int		close_cross(void);
 void	move(int keycode, t_data *mlx);
 int		keys(int keycode, t_data *mlx);
 void	start_fractal(t_data *data, char flag);
+int	zoom(int keycode, int x, int y, t_data *mlx);
 
 #endif

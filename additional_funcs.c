@@ -59,31 +59,30 @@ int	keys(int keycode, t_data *mlx)
 	if (keycode == 2 || keycode == 100)
 		mlx->juliax += 0.2;
 	start_fractal(mlx, 'm');
-	//start_fractal(mlx, 'j');
 	return (0);
 }
 
-// int	zoom(int keycode, int x, int y, t_data *mlx)
-// {
-// 	float	dx;
-// 	float	dy;
+int	zoom(int keycode, int x, int y, t_data *mlx)
+{
+	float	dx;
+	float	dy;
 
-// 	dx = (mlx->xmax - mlx->xmin) / SIZEX;
-// 	dy = (mlx->ymax - mlx->ymin) / SIZEY;
-// 	if (keycode == 5)
-// 	{
-// 		mlx->xmin = (mlx->xmin + ((dx * x) * 0.5));
-// 		mlx->xmax = (mlx->xmax - ((dx * (SIZEX - x)) * 0.5));
-// 		mlx->ymax = (mlx->ymax - ((dy * y) * 0.5));
-// 		mlx->ymin = (mlx->ymin + ((dy * (SIZEY - y)) * 0.5));
-// 	}
-// 	if (keycode == 4)
-// 	{
-// 		mlx->xmin = (mlx->xmin - ((dx * x) * 0.5));
-// 		mlx->xmax = (mlx->xmax + ((dx * (SIZEX - x)) * 0.5));
-// 		mlx->ymax = (mlx->ymax + ((dy * y) * 0.5));
-// 		mlx->ymin = (mlx->ymin - ((dy * (SIZEY - y)) * 0.5));
-// 	}
-// 	ft_run(mlx, 1);
-// 	return (0);
-// }
+	dx = (mlx->xmax - mlx->xmin) / WIDTH;
+	dy = (mlx->ymax - mlx->ymin) / HEIGHT;
+	if (keycode == 5)
+	{
+		mlx->xmin = (mlx->xmin + ((dx * x) * 0.3));
+		mlx->xmax = (mlx->xmax - ((dx * (WIDTH - x)) * 0.3));
+		mlx->ymax = (mlx->ymax - ((dy * y) * 0.3));
+		mlx->ymin = (mlx->ymin + ((dy * (HEIGHT - y)) * 0.3));
+	}
+	if (keycode == 4)
+	{
+		mlx->xmin = (mlx->xmin - ((dx * x) * 0.3));
+		mlx->xmax = (mlx->xmax + ((dx * (WIDTH - x)) * 0.3));
+		mlx->ymax = (mlx->ymax + ((dy * y) * 0.3));
+		mlx->ymin = (mlx->ymin - ((dy * (HEIGHT - y)) * 0.3));
+	}
+	start_fractal(mlx, 'm');
+	return (0);
+}
