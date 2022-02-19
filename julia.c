@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gdara <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 10:46:23 by gdara             #+#    #+#             */
+/*   Updated: 2022/02/14 10:46:23 by gdara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	julia_set(double x, double y, t_data *mlx)
@@ -13,9 +25,9 @@ int	julia_set(double x, double y, t_data *mlx)
 	while (i < ITERATION)
 	{
 		temp = xx;
-		xx = (pow(xx, 2) - pow(yy, 2)) + 0.103 + mlx->juliax;
+		xx = (xx * xx - yy * yy) + 0.103 + mlx->juliax;
 		yy = (2 * temp * yy) + 0.321 + mlx->juliay;
-		if (pow(xx, 2) + pow(yy, 2) > 4)
+		if (xx * xx + yy * yy > 4)
 		{
 			mlx_pixel_put(mlx->mlx, mlx->mlx_win, mlx->loopx, mlx->loopy,
 				(mlx->color) + 0x008DE3EC * i);
@@ -39,8 +51,10 @@ int	julia(t_data *data)
 	{
 		while (data->loopx < WIDTH)
 		{
-			x = data->xmin + (data->loopx * ((data->xmax - data->xmin) / WIDTH));
-			y = data->ymax - (data->loopy * ((data->ymax - data->ymin) / HEIGHT));
+			x = data->xmin + (data->loopx
+					* ((data->xmax - data->xmin) / WIDTH));
+			y = data->ymax - (data->loopy
+					* ((data->ymax - data->ymin) / HEIGHT));
 			julia_set(x, y, data);
 			data->loopx++;
 		}

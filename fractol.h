@@ -1,14 +1,26 @@
-#ifndef FRACTOL_H
-#define FRACTOL_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gdara <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 10:47:29 by gdara             #+#    #+#             */
+/*   Updated: 2022/02/14 10:47:29 by gdara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "miniLibX/mlx.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
+#	ifndef FRACTOL_H
+# define FRACTOL_H
+
+# include "miniLibX/mlx.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <math.h>
 # define WIDTH 800
 # define HEIGHT 800
 # define ITERATION	120
-#include <stdio.h> 
+# include <stdio.h> 
 
 typedef struct s_data
 {
@@ -25,7 +37,11 @@ typedef struct s_data
 	double	juliax;
 }	t_data;
 
-int	mandelbrot(t_data *mlx);
-int	julia(t_data *mlx);
-int	close_esc(void);
+int		mandelbrot(t_data *mlx);
+int		julia(t_data *mlx);
+int		close_cross(void);
+void	move(int keycode, t_data *mlx);
+int		keys(int keycode, t_data *mlx);
+void	start_fractal(t_data *data, char flag);
+
 #endif

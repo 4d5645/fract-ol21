@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gdara <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 10:45:06 by gdara             #+#    #+#             */
+/*   Updated: 2022/02/14 10:45:06 by gdara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	ft_strcmp(char *s1, char *s2)
@@ -21,6 +33,16 @@ void	initialize(t_data *data)
 	data->color = 0;
 }
 
+void	start_fractal(t_data *data, char flag)
+{
+	if (flag == 'm')
+		mandelbrot(data);
+	if (flag == 'j')
+		julia(data);
+	else
+		printf("Smth wrong\n");
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -28,10 +50,22 @@ int	main(int argc, char **argv)
 	if (argc >= 2)
 	{
 		initialize(&data);
-		if (!ft_strcmp(argv[1], "Mandelbrot") )
-			mandelbrot(&data);
+		if (!ft_strcmp(argv[1], "Mandelbrot"))
+		{
+			start_fractal(&data, 'm');
+			mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
+			mlx_key_hook(data.mlx_win, keys, &data);
+			//mlx_mouse_hook(mlx.win, zoom, (void *)&mlx);
+			mlx_loop(data.mlx);
+		}
 		else if (!ft_strcmp(argv[1], "Julia"))
-			julia(&data);
+		{
+			start_fractal(&data, 'j');
+			mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
+			mlx_key_hook(data.mlx_win, keys, &data);
+			//mlx_mouse_hook(mlx.win, zoom, (void *)&mlx);
+			mlx_loop(data.mlx);
+		}
 		else
 			printf("Wrong name of fractal\n");
 	}

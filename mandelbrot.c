@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gdara <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 10:40:16 by gdara             #+#    #+#             */
+/*   Updated: 2022/02/14 10:40:16 by gdara            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "fractol.h"
 
 int	mandelbrot_set(double x, double y, t_data *data)
@@ -23,7 +34,8 @@ int	mandelbrot_set(double x, double y, t_data *data)
 		}
 		i++;
 	}
-	mlx_pixel_put(data->mlx, data->mlx_win, data->loopx, data->loopy, 0x000E0E0E);
+	mlx_pixel_put(data->mlx, data->mlx_win,
+		data->loopx, data->loopy, 0x000E0E0E);
 	return (0);
 }
 
@@ -39,15 +51,15 @@ int	mandelbrot(t_data *data)
 	{
 		while (data->loopx < WIDTH)
 		{
-			x = data->xmin + (data->loopx * ((data->xmax - data->xmin) / WIDTH));
-			y = data->ymin + (data->loopy * ((data->ymax - data->ymin) / HEIGHT));
+			x = data->xmin + (data->loopx
+					* ((data->xmax - data->xmin) / WIDTH));
+			y = data->ymin + (data->loopy
+					*((data->ymax - data->ymin) / HEIGHT));
 			mandelbrot_set(x, y, data);
 			data->loopx++;
 		}
 		data->loopy++;
 		data->loopx = 0;
 	}
-	mlx_hook(data->mlx_win, 17, 2, close_esc, (void *)0);
-	mlx_loop(data->mlx);
 	return (1);
 }
