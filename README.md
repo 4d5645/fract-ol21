@@ -7,6 +7,7 @@ https://sunandstuff.com/mandelbrot/about/
 https://mathigon.org/course/fractals/introduction
 
 
+<<<<<<< HEAD
 Чего сделать:
 прописать зум для мандельброта
 подстроить всю прогу под жулиа
@@ -15,3 +16,7 @@ https://mathigon.org/course/fractals/introduction
 расписать комментарии
 подогнать под норму
 проверить что по сабдекту
+=======
+
+https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx
+>>>>>>> 2cc2f2a97758c463d7b4d8761da838790e8d9017
