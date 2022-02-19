@@ -38,8 +38,8 @@ typedef struct s_data
 	int		iter_x;
 	int		iter_y;
 	int		color;
-	double	juliay;
-	double	juliax;
+	double	change_y;
+	double	change_x;
 }	t_data;
 
 int		mandelbrot(t_data *mlx);

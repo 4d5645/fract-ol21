@@ -25,8 +25,8 @@ int	julia_set(double x, double y, t_data *mlx)
 	while (i < ITERATION)
 	{
 		temp = xx;
-		xx = (xx * xx - yy * yy) + 0.103 + mlx->juliax;
-		yy = (2 * temp * yy) + 0.321 + mlx->juliay;
+		xx = (xx * xx - yy * yy) - 0.2 + mlx->change_x;
+		yy = (2 * temp * yy) + 0.75 + mlx->change_y;
 		if (xx * xx + yy * yy > 4)
 		{
 			mlx_pixel_put(mlx->mlx, mlx->mlx_win, mlx->iter_x, mlx->iter_y,

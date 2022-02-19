@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-void	img_pix_put(t_data *img, int x, int y, int color)
+void	img_pix_put(t_data *data, int x, int y, int color)
 {
 	char    *pixel;
 
-    pixel = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+    pixel = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(int *)pixel = color;
 }
 
@@ -65,13 +65,12 @@ int	mandelbrot(t_data *data)
 					* ((data->xmax - data->xmin) / WIDTH));
 			y = data->ymin + (data->iter_y
 					*((data->ymax - data->ymin) / HEIGHT));
-			data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length,
-								&data->endian);
 			mandelbrot_set(x, y, data);
 			data->iter_x++;
 		}
 		data->iter_y++;
 		data->iter_x = 0;
 	}
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	return (1);
 }
