@@ -22,20 +22,20 @@ int	julia_set(double x, double y, t_data *mlx)
 	xx = x;
 	yy = y;
 	i = 1;
-	while (i < ITERATION)
+	while (i < 150)
 	{
 		temp = xx;
 		xx = (xx * xx - yy * yy) - 0.2 + mlx->change_x;
 		yy = (2 * temp * yy) + 0.75 + mlx->change_y;
 		if (xx * xx + yy * yy > 4)
 		{
-			mlx_pixel_put(mlx->mlx, mlx->mlx_win, mlx->iter_x, mlx->iter_y,
-				(mlx->color) + 0x008DE3EC * i);
+			img_pix_put(mlx, mlx->iter_x, mlx->iter_y, (mlx->color)
+				+ 0x00BA55D3 * i);
 			return (0);
 		}
 		i++;
 	}
-	mlx_pixel_put(mlx -> mlx, mlx -> mlx_win, mlx->iter_x, mlx->iter_y, 0);
+	img_pix_put(mlx, mlx->iter_x, mlx->iter_y, 0x000E0E0E);
 	return (0);
 }
 
@@ -44,11 +44,11 @@ int	julia(t_data *data)
 	double	x;
 	double	y;
 
-	data->iter_x = 0;
 	data->iter_y = 0;
 	mlx_clear_window(data->mlx, data->mlx_win);
 	while (data->iter_y < HEIGHT)
 	{
+		data->iter_x = 0;
 		while (data->iter_x < WIDTH)
 		{
 			x = data->xmin + (data->iter_x
@@ -59,7 +59,7 @@ int	julia(t_data *data)
 			data->iter_x++;
 		}
 		data->iter_y++;
-		data->iter_x = 0;
 	}
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	return (0);
 }

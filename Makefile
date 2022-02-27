@@ -16,11 +16,11 @@ NAME = fractol
 
 CC = gcc
 
-SRC = main.c mandelbrot.c julia.c events.c 
+SRC = main.c mandelbrot.c julia.c events.c tools.c errors.c
 
 OBJS = $(SRC:.c=.o)
 
-MLX		= ./miniLibX/
+MLX		= ./minilibx/
 MLX_LNK	= -L $(MLX) -l mlx -framework OpenGL -framework AppKit
 
 MLX_INC	= -I $(MLX)

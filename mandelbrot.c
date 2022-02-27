@@ -11,13 +11,11 @@
 /* ************************************************************************** */
 #include "fractol.h"
 
-void	img_pix_put(t_data *data, int x, int y, int color)
-{
-	char    *pixel;
-
-    pixel = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(int *)pixel = color;
-}
+/*
+** In the loop, consider whether the given pixel 
+** is included in the Mandlbrot set and paint it 
+** in the corresponding color.
+*/
 
 int	mandelbrot_set(double x, double y, t_data *data)
 {
@@ -29,14 +27,15 @@ int	mandelbrot_set(double x, double y, t_data *data)
 	xx = 0;
 	yy = 0;
 	i = 1;
-	while (i < ITERATION)
+	while (i < 150)
 	{
 		temp = xx;
 		xx = (xx * xx - yy * yy) + x;
 		yy = (2 * temp * yy) + y;
 		if (xx * xx + yy * yy > 4)
 		{
-			img_pix_put(data, data->iter_x, data->iter_y, (data->color) + 0x00FFC0CB * i);
+			img_pix_put(data, data->iter_x, data->iter_y,
+				(data->color) + 0x006495ED * i);
 			return (0);
 		}
 		i++;
@@ -46,7 +45,8 @@ int	mandelbrot_set(double x, double y, t_data *data)
 }
 
 /*
-** Use nested loop
+** Use nested loop.
+** Find the current pixel coordinates.
 */
 
 int	mandelbrot(t_data *data)
@@ -54,11 +54,11 @@ int	mandelbrot(t_data *data)
 	double	x;
 	double	y;
 
-	data->iter_x = 0;
 	data->iter_y = 0;
 	mlx_clear_window(data->mlx, data->mlx_win);
 	while (data->iter_y < HEIGHT)
 	{
+		data->iter_x = 0;
 		while (data->iter_x < WIDTH)
 		{
 			x = data->xmin + (data->iter_x
@@ -69,8 +69,7 @@ int	mandelbrot(t_data *data)
 			data->iter_x++;
 		}
 		data->iter_y++;
-		data->iter_x = 0;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	return (1);
+	return (0);
 }

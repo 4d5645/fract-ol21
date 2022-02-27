@@ -12,13 +12,7 @@
 
 #include "fractol.h"
 
-int	close_cross(void)
-{
-	exit(0);
-	return (0);
-}
-
-void	move(int key_code, t_data *data)
+void	make_move(int key_code, t_data *data)
 {
 	float	dx;
 	float	dy;
@@ -34,36 +28,37 @@ void	move(int key_code, t_data *data)
 	}
 	if (key_code == 126 || key_code == 125)
 	{
-		if (key_code == 125)
+		if (key_code == 126 && data->flag == 'm')
+			dy *= -1;
+		if (key_code == 125 && data->flag == 'j')
 			dy *= -1;
 		data->ymin += dy / 7.5;
 		data->ymax += dy / 7.5;
 	}
 }
 
-int	keys(int keycode, t_data *data)
+int	event_keys(int keycode, t_data *data)
 {
 	if (keycode == 53)
 		exit(0);
 	if (keycode == 123 || keycode == 124
 		|| keycode == 126 || keycode == 125)
-		move(keycode, data);
-	if (keycode == 8 || keycode == 99)
+		make_move(keycode, data);
+	if (keycode == 49)
 		data->color += 0x00111111;
-	if (keycode == 1 || keycode == 115)
+	if (keycode == 1)
 		data->change_y += 0.1;
-	if (keycode == 13 || keycode == 119)
+	if (keycode == 13)
 		data->change_y -= 0.1;
-	if (keycode == 0 || keycode == 97)
+	if (keycode == 0)
 		data->change_x -= 0.1;
-	if (keycode == 2 || keycode == 100)
+	if (keycode == 2)
 		data->change_x += 0.1;
-	//start_fractal(data, 'm');
-	start_fractal(data, 'j');
+	start_fractal(data);
 	return (0);
 }
 
-int	zoom(int keycode, int x, int y, t_data *data)
+int	event_zoom(int keycode, int x, int y, t_data *data)
 {
 	float	dx;
 	float	dy;
@@ -84,6 +79,6 @@ int	zoom(int keycode, int x, int y, t_data *data)
 		data->ymax = (data->ymax + ((dy * y) * 0.3));
 		data->ymin = (data->ymin - ((dy * (HEIGHT - y)) * 0.3));
 	}
-	start_fractal(data, 'm');
+	start_fractal(data);
 	return (0);
 }

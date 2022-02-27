@@ -12,14 +12,21 @@
 
 #include "fractol.h"
 
-int	ft_strcmp(char *s1, char *s2)
+void	instruction(void)
 {
-	unsigned int	i;
-
-	i = 0;
-	while (s2[i] && s1[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	ft_putstr_fd("\033[32mHow to use: ./fractol <name> \e[0m\n", 1);
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\033[32mFractals you can draw: \e[0m\n", 1);
+	ft_putstr_fd("1. Mandelbrot\n", 1);
+	ft_putstr_fd("2. Julia\n", 1);
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\033[32mWhat can be clicked: \e[0m\n", 1);
+	ft_putstr_fd("1. To navigate - arrows\n", 1);
+	ft_putstr_fd("2. To zoom in - scroll up\n", 1);
+	ft_putstr_fd("3. To zoom out - scroll down\n", 1);
+	ft_putstr_fd("4. To change colors - space\n", 1);
+	ft_putstr_fd("5. To change view of Julia - W,D,S,A\n", 1);
+	ft_putstr_fd("\n", 1);
 }
 
 void	initialize(t_data *data)
@@ -27,7 +34,8 @@ void	initialize(t_data *data)
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fract'ol");
 	data->img = mlx_new_image(data, WIDTH, HEIGHT);
-	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel,
+			&data->line_length, &data->endian);
 	data->xmin = -2;
 	data->xmax = 2;
 	data->ymin = -2;
@@ -35,11 +43,11 @@ void	initialize(t_data *data)
 	data->color = 0;
 }
 
-void	start_fractal(t_data *data, char flag)
+void	start_fractal(t_data *data)
 {
-	if (flag == 'm')
+	if (data->flag == 'm')
 		mandelbrot(data);
-	if (flag == 'j')
+	if (data->flag == 'j')
 		julia(data);
 }
 
@@ -52,28 +60,26 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (argc >= 2)
+	if (argc == 2)
 	{
 		initialize(&data);
 		if (!ft_strcmp(argv[1], "Mandelbrot"))
 		{
-			start_fractal(&data, 'm');
-			mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
-			mlx_key_hook(data.mlx_win, keys, &data);
-			mlx_mouse_hook(data.mlx_win, zoom, (void *)&data);
-			mlx_loop(data.mlx);
+			data.flag = 'm';
+			start_fractal(&data);
 		}
 		else if (!ft_strcmp(argv[1], "Julia"))
 		{
-			start_fractal(&data, 'j');
-			mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
-			mlx_key_hook(data.mlx_win, keys, &data);
-			mlx_mouse_hook(data.mlx_win, zoom, (void *)&data);
-			mlx_loop(data.mlx);
+			data.flag = 'j';
+			start_fractal(&data);
 		}
 		else
-			printf("Wrong name of fractal\n");
+			wrong_mame();
+		mlx_hook(data.mlx_win, 17, 2, close_cross, NULL);
+		mlx_key_hook(data.mlx_win, event_keys, &data);
+		mlx_mouse_hook(data.mlx_win, event_zoom, (void *)&data);
+		mlx_loop(data.mlx);
 	}
 	else
-		printf("Wrong count of argumens\n");
+		wrong_count_of_args();
 }
