@@ -13,5 +13,3 @@ https://mathigon.org/course/fractals/introduction
 https://harm-smits.github.io/42docs/libs/minilibx/images.html
 
 https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx
-
-скрыть сборку
